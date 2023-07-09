@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import { setRating } from "../states/commentState"
 
 function AddStarsRating({myRate}) {
     const dispatch = useDispatch();
     const [rate, setRate] = useState(myRate===0?0:myRate);
-    const [isSelected, setIsSelected] = useState(false)
+    const [isSelected, setIsSelected] = useState(false);
 
     useEffect(()=>{
         dispatch(setRating(rate))

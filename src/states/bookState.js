@@ -4,7 +4,7 @@ const initialState = {
     books: [],
     isLoading: false,
     error: ""
-}
+};
 
 const getBooksApi = createAsyncThunk(
     "getBooks/fetchGetBooks",

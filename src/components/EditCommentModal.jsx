@@ -43,11 +43,11 @@ function EditCommentModal() {
                 <FloatingLabel className='mt-2 w-100' controlId="floatingTextarea2" label="">
                     <Form.Control
                         as="textarea"
-                        placeholder="Leave a comment here"
                         style={{ height: '100px' }}
-                        /* value={value} */
-                        onChange={(e) => { dispatch(setComment(e.target.value)); }}
+                        value={value}
+                        onChange={(e) => { dispatch(setComment(e.target.value)); setValue(e.target.value) }}
                     />
+                    {/* <input value={{value}} onChange={(e) => { dispatch(setComment(e.target.value)); }} /> */}
                 </FloatingLabel>
                 <div className='mt-2 d-flex justify-content-between'>
                     <div>
@@ -60,7 +60,12 @@ function EditCommentModal() {
                                 setTimeout(() => { dispatch(filterComments(myCurrentAsin)) }, 2000)
                             }}>Update <i class="bi bi-journal-arrow-up text-light"></i></Button>
 
-                        <Button className='text-light' variant="danger" onClick={() => dispatch(deleteCommentsFunc(myPutId))}>Delete <i class="bi bi-trash-fill text-light"></i></Button>
+                        <Button className='text-light' variant="danger" onClick={() => {
+                            dispatch(deleteCommentsFunc(myPutId));
+                            dispatch(isEditing(false));
+                            dispatch(getCommentsFunc());
+                            setTimeout(() => { dispatch(filterComments(myCurrentAsin)) }, 2000)
+                        }}>Delete <i class="bi bi-trash-fill text-light"></i></Button>
                     </div>
                     <div>
                         <Button className='text-dark' variant="light" onClick={() => dispatch(isEditing(false))}>Cancel</Button>

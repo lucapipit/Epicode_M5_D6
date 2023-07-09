@@ -8,25 +8,19 @@ import "../style/style.css"
 
 
 function Homepage() {
-    const [theme, setTheme] = useState(true)
-    const darkBtn = () => { setTheme(!theme); /* document.body.className = theme?"lightTheme":"darkTheme" */ };
-
-    //REDUX - Dispatch
+    
     const dispatch = useDispatch();
     const isOnChanging = useSelector((state) =>  state.bookComments.isOnChanging);
+    const theme = useSelector((state) => state.bookComments.isLightMode)
 
-
-    useEffect(() => {
-
-    }, [])
     
     return (
         <>
-            <body className={theme ? "lightTheme" : "darkThemeBody"}>
-                <NavigationBar theme={theme} darkBtn={darkBtn} />
+            <body className={theme ? "lightTheme" : "darkTheme"}>
+                <NavigationBar theme={theme}/>
                 {isOnChanging?<EditCommentModal />:null}
                 <Jumbotron />
-                <LatestRelease theme={theme} />
+                <LatestRelease/>
             </body> 
         </>
     )

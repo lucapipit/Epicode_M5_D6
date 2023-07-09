@@ -1,9 +1,12 @@
+body{
+    padding-top: 28px;
+}
 .lightTheme{
-    
+    background-color: #fff;
     color: #333 !important;
 }
 .lightTheme *{
-    
+    background-color: #fff;
     color: #333 !important;
 }
 .darkTheme{
@@ -11,23 +14,27 @@
     color: #f8f8f8 !important;
 }
 .darkTheme *{
-    background-color: #222;
+    background-color: #222 !important;
     color: #f8f8f8 !important;
 }
-.darkThemeBody{
-    /* background: linear-gradient(to top, #333, #222 ); */
-    background: linear-gradient(to left, #111, #333 );
+.darkTheme .myCard{
+    background-color: #1a1a1a !important;
 }
+.darkTheme .myCard *{
+    background: transparent !important;
+}
+.darkTheme .myNavbar{
+    background-color: #111 !important;
+}
+.darkTheme .myNavbar *{
+    background: transparent !important;
+}
+
 .myJumbotron{
     height: 300px !important; 
     background-image: url("https://img.freepik.com/free-photo/book-that-has-word-mountain-it_188544-12612.jpg?w=1380&t=st=1688558124~exp=1688558724~hmac=df441f81ce4ba3b04eab08fbfe33b7f3aa29de0727d682d1c5d293267846e627")
 }
-/* .stickyComments{
-    position: sticky;
-    top: 70px;
-    z-index: 9;
-    background-color: #fff;
-} */
+
 [class*=bi-star]{
     color: orange !important;
 }

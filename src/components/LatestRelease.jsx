@@ -4,10 +4,11 @@ import { Row, Col } from 'react-bootstrap';
 import SingleBook from './SingleBook';
 import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCategory } from '../states/categoryState';
-import { getCommentsFunc } from "../states/commentState"
+import { getCategory, searchFilter } from '../states/categoryState';
+import { getCommentsFunc, starRateAverage } from "../states/commentState"
 import Comments from './Comments';
 import SendComment from './SendComment';
+import Spinner from 'react-bootstrap/Spinner';
 import "../style/style.css"
 //Data Json
 import SciFi from "../data/scifi.json"
@@ -22,6 +23,7 @@ function LatestRelease({ theme }) {
 
     const dispatch = useDispatch();
     const myBooks = useSelector((state) => state.category.category);
+    const myFilteredBooks = useSelector((state) => state.category.filteredSearchBooks);
     const myComments = useSelector((state) => state.bookComments.comments);
     const filteredComm = useSelector((state) => state.bookComments.filteredComments);
     const isFirstOpen = useSelector((state) => state.bookComments.isFirstOpen);
@@ -30,14 +32,18 @@ function LatestRelease({ theme }) {
 
 
     useEffect(() => {
+        dispatch(searchFilter())
         dispatch(getCommentsFunc());
+        setTimeout(() => {
+            dispatch(starRateAverage())
+        }, 2000);
+
         console.log(myComments);
         switch (myBooks) {
             case SciFi:
                 dispatch(getCategory(SciFi));
                 break;
             case Romance:
-                console.log("FUNZIONOOOOOOO");
                 dispatch(getCategory(Romance));
                 break;
             case Fantasy:
@@ -55,12 +61,13 @@ function LatestRelease({ theme }) {
         }
     }, [myBooks])
 
+
     return (
         <Container fluid className='mt-2'>
             <Row className='mt-4 '>
                 <Col sm={8} >
-                    <Row>
-                        {myBooks && myBooks.map((el) => {
+                    <Row className='d-flex justify-content-center'>
+                        {myFilteredBooks && myFilteredBooks.map((el) => {
                             return <SingleBook
                                 key={nanoid()}
                                 asin={el.asin}
@@ -77,7 +84,7 @@ function LatestRelease({ theme }) {
                     <div className='stickyComments' >
                         <h4 className='fw-light'>Comments of</h4>
                         <div className={`fw-light text-light bg-${isFirstOpen ? "primary" : "success"} p-2 rounded-2 my-2`}>{isFirstOpen ? "All Books" : selectedBookName}</div>
-                        <p>({filteredComm.length}) comments <ViewStarsRating rate={rateBookAverage} /> 	• <i>rate average</i> </p>
+                        {rateBookAverage?<p>({!isFirstOpen?filteredComm.length:myComments.length}) comments <ViewStarsRating rate={rateBookAverage} /> 	• <i>rate average</i> </p>:(isFirstOpen?<Spinner animation="border" variant="warning" />:"non ci sono commenti!")}
                         <hr />
                     </div>
                     <Row>
@@ -89,6 +96,7 @@ function LatestRelease({ theme }) {
                                 author={el.author}
                                 rate={el.rate}
                                 comment={el.comment}
+                                updatedAt={el.updatedAt}
                             />
                         })}
                     </Row>

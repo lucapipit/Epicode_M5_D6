@@ -19,7 +19,7 @@ const initialState = {
     displayComment: "",
     displayRate: 0,
     putCurrentId: "",
-   
+
 }
 
 const getCommentsFunc = createAsyncThunk(
@@ -122,15 +122,28 @@ const commentsSlice = createSlice({
             });
         },
         starRateAverage: (state, action) => {//display the stars verage rating
-            state.selectedBookName = action.payload;
-            const numberOfComments = state.filteredComments.length;
-            const myFilteredComments = state.filteredComments;
-            let myCounter = 0;
-            myFilteredComments.map((el) => {
-                myCounter += parseInt(el.rate);
-            })
-            console.log(myCounter, numberOfComments);
-            state.rateAverage = Math.round(myCounter / numberOfComments);
+
+            if (state.filteredComments.length===0 && state.isFirstOpen) {
+                const numberOfComments = state.comments.length;
+                const myFilteredComments = state.comments;
+                let myCounter = 0;
+                myFilteredComments.map((el) => {
+                    myCounter += parseInt(el.rate);
+                });
+                console.log(myCounter, numberOfComments, state.filteredComments.length);
+                state.rateAverage = Math.round(myCounter / numberOfComments);
+            } else {
+                state.selectedBookName = action.payload;
+                const numberOfComments = state.filteredComments.length;
+                const myFilteredComments = state.filteredComments;
+                let myCounter = 0;
+                myFilteredComments.map((el) => {
+                    myCounter += parseInt(el.rate);
+                });
+                console.log(myCounter, numberOfComments);
+                state.rateAverage = Math.round(myCounter / numberOfComments);
+            }
+
         },
         setTheme: (state, action) => {//set the light/dark mode
             state.isLightMode = !state.isLightMode
@@ -153,7 +166,7 @@ const commentsSlice = createSlice({
             state.isOnChanging = action.payload;
         },
         displayMyComment: (state, action) => {
-            state.comments = (state.comments).filter((el)=>{
+            state.comments = (state.comments).filter((el) => {
                 return el._id === action.payload
             });
         },

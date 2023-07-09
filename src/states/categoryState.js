@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     category: "",
+    filteredSearchBooks: null,
+    singleBook: null
 };
 
 
@@ -12,8 +14,23 @@ const categorySlice = createSlice({
         getCategory: (state, action)=>{
             state.category = action.payload
         },
+        searchFilter: (state, action) => {
+            if(action.payload){
+                state.filteredSearchBooks = state.category.filter((el)=>{
+                    return el.title.toLowerCase().includes(action.payload.toLowerCase())
+                })
+                console.log(state.filteredSearchBooks);
+            }else{
+                state.filteredSearchBooks = state.category
+            }
+        },
+        selectSingleBook: (state, action) => {
+            state.singleBook = state.category.filter((el)=>{
+                return el.asin == action.payload
+            })
+        }
     }
 })
 
-export const {getCategory} = categorySlice.actions;
+export const {getCategory, searchFilter, selectSingleBook} = categorySlice.actions;
 export default categorySlice.reducer
