@@ -3,20 +3,18 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
-/* import * as Icon from 'react-bootstrap-icons'; */
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 //REDUX - import base e configureStore
 import { Provider } from 'react-redux';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 //REDUX - import dei reducers
 import bookSlice from "./states/bookState"
-import myTrySlice from "./states/tryRedux"
 import categorySlice from "./states/categoryState"
 import commentsSlice from "./states/commentState"
 
 const rootReducer = combineReducers({
   myReducerN1: bookSlice,
-  myReducerN2: myTrySlice,
   category: categorySlice,
   bookComments: commentsSlice
 });

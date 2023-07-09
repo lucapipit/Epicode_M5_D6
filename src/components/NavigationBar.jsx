@@ -5,7 +5,9 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import "./style.css";
+import "../style/style.css";
+import { setTheme } from "../states/commentState";
+import { UseSelector, useSelector } from 'react-redux';
 //data Json
 import SciFi from "../data/scifi.json"
 import Horror from "../data/horror.json"
@@ -22,10 +24,10 @@ import { getCategory } from '../states/categoryState';
 function NavigationBar({theme, darkBtn}) {
 
     const dispatch = useDispatch()
-
+    const themeMode = useSelector((state) => state.bookComments.isLightMode);
     return (
 
-        <Navbar expand="lg" className={`${theme?"lightTheme":"darkTheme"} text-warning position-fixed w-100 top-0 border-secondary border-bottom`} style={{zIndex: "9"}}>
+        <Navbar expand="lg" className={`${theme?"lightTheme":"darkTheme"} text-warning position-fixed w-100 top-0 border-secondary border-bottom`} style={{zIndex: "9", backgroundColor: "#fff"}}>
             <Container fluid >
                 <Navbar.Brand href="#">BestBooks</Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbarScroll" />
@@ -35,7 +37,6 @@ function NavigationBar({theme, darkBtn}) {
                         style={{ maxHeight: '100px' }}
                         navbarScroll
                     >
-                        <Nav.Link href="#action1">Home</Nav.Link>
                         <NavDropdown title="Category" id="navbarScrollingDropdown">
                             <NavDropdown.Item href="#action3" onClick={()=>dispatch(getCategory(Fantasy))}>Fantasy</NavDropdown.Item>
                             <NavDropdown.Item href="#action4" onClick={()=>dispatch(getCategory(Romance))}>Romance</NavDropdown.Item>
@@ -44,7 +45,7 @@ function NavigationBar({theme, darkBtn}) {
                             <NavDropdown.Item href="#action7" onClick={()=>dispatch(getCategory(Horror))}>Horror</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
-                    <Button fill onClick={darkBtn}>dark</Button>
+                    <a className=' me-3 rounded-5 themeIcon' fill onClick={()=>{dispatch(setTheme())}}>{themeMode?<i class="bi bi-moon-fill"></i>:<i class="bi bi-brightness-high-fill"></i>}</a>
                     <Form className="d-flex">
                         <Form.Control
                             type="search"

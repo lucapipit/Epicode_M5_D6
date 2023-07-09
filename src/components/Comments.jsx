@@ -1,8 +1,26 @@
-import React from 'react'
+import React from 'react';
+import Card from 'react-bootstrap/Card';
+import ViewStarsRating from './ViewStarsRating';
+import { useDispatch } from 'react-redux';
+import { isEditing, getCommentsFunc, displayMyComment, setCurrentId } from '../states/commentState';
 
-function Comments(){
+function Comments({ _id, author, rate, comment, elementId }) {
+  const dispatch = useDispatch();
   return (
-    <div>Comments</div>
+    <Card className='my-1 shadow '>
+      <Card.Body>
+        <Card.Text>
+          <ViewStarsRating rate={rate} />
+          <span className='ms-4' onClick={() => {
+            dispatch(isEditing(true));
+            dispatch(getCommentsFunc(elementId));
+            setTimeout(() => { dispatch(displayMyComment(_id)) }, 2000);
+            dispatch(setCurrentId(_id))
+          }} style={{ cursor: "pointer" }}><i class="bi bi-pencil-fill text-info"></i></span>
+        </Card.Text>
+        <Card.Text><span className='text-primary'>{author}</span> - <i>{comment}</i></Card.Text>
+      </Card.Body>
+    </Card >
   )
 }
 

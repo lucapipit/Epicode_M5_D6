@@ -1,30 +1,37 @@
 import { React, useState, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
-import {Row, Col} from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import SingleBook from './SingleBook';
 import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCategory } from '../states/categoryState';
-import {getCommentsFunc} from "../states/commentState"
-import {getComments} from "../states/commentState"
+import { getCommentsFunc } from "../states/commentState"
+import Comments from './Comments';
+import SendComment from './SendComment';
+import "../style/style.css"
 //Data Json
 import SciFi from "../data/scifi.json"
 import Horror from "../data/horror.json"
 import Romance from "../data/romance.json"
 import History from "../data/history.json"
 import Fantasy from "../data/fantasy.json"
+import ViewStarsRating from './ViewStarsRating';
 
 
 function LatestRelease({ theme }) {
 
     const dispatch = useDispatch();
     const myBooks = useSelector((state) => state.category.category);
-    const myComments = useSelector((state) => state.bookComments.comments)
-    console.log(myComments);
+    const myComments = useSelector((state) => state.bookComments.comments);
+    const filteredComm = useSelector((state) => state.bookComments.filteredComments);
+    const isFirstOpen = useSelector((state) => state.bookComments.isFirstOpen);
+    const rateBookAverage = useSelector((state) => state.bookComments.rateAverage);
+    const selectedBookName = useSelector((state) => state.bookComments.selectedBookName)
+
 
     useEffect(() => {
         dispatch(getCommentsFunc());
-        dispatch(getComments());
+        console.log(myComments);
         switch (myBooks) {
             case SciFi:
                 dispatch(getCategory(SciFi));
@@ -46,12 +53,12 @@ function LatestRelease({ theme }) {
                 dispatch(getCategory(History));
 
         }
-    }, [getCategory(), dispatch, myBooks, myComments])
+    }, [myBooks])
 
     return (
-        <Container fluid className='mt-5 pt-2'>
+        <Container fluid className='mt-2'>
             <Row className='mt-4 '>
-                <Col sm={8} md={8} lg={8}>
+                <Col sm={8} >
                     <Row>
                         {myBooks && myBooks.map((el) => {
                             return <SingleBook
@@ -66,10 +73,28 @@ function LatestRelease({ theme }) {
                         })}
                     </Row>
                 </Col>
-                <Col sm={4} md={4} lg={4}>
-                    {`ciao ${JSON.stringify(myComments)}`}
+                <Col className='px-4' sm={4} >
+                    <div className='stickyComments' >
+                        <h4 className='fw-light'>Comments of</h4>
+                        <div className={`fw-light text-light bg-${isFirstOpen ? "primary" : "success"} p-2 rounded-2 my-2`}>{isFirstOpen ? "All Books" : selectedBookName}</div>
+                        <p>({filteredComm.length}) comments <ViewStarsRating rate={rateBookAverage} /> 	• <i>rate average</i> </p>
+                        <hr />
+                    </div>
+                    <Row>
+                        {(isFirstOpen ? myComments : filteredComm).map((el) => {
+                            return <Comments
+                                key={nanoid()}
+                                elementId={el.elementId}
+                                _id={el._id}
+                                author={el.author}
+                                rate={el.rate}
+                                comment={el.comment}
+                            />
+                        })}
+                    </Row>
+                    <SendComment />
                 </Col>
-                
+
             </Row>
         </Container>
     )
