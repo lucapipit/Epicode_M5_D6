@@ -10,17 +10,16 @@ body{
     color: #333 !important;
 }
 
-/* tema light */
+/* tema dark */
 .darkTheme{
     background-color: #222;
     color: #f8f8f8 !important;
 }
 .darkTheme *{
-    background-color: #222 !important;
     color: #f8f8f8 !important;
 }
 .darkTheme .myCard{
-    background-color: #1a1a1a !important;
+    background-color: #151515 !important;
 }
 .darkTheme .myCard *{
     background: transparent !important;
@@ -28,8 +27,17 @@ body{
 .darkTheme .myNavbar{
     background-color: #111 !important;
 }
-.darkTheme .myNavbar *{
-    background: transparent !important;
+.darkTheme .dropdown-menu{
+    background: #222 !important;
+}
+.darkTheme .dropdown-item:hover{
+    background: #393939 !important;
+}
+.darkTheme .myCommentCard{
+    background-color: #151515 !important;
+}
+.darkTheme .form-control{
+    color: #333 !important;
 }
 
 .myJumbotron{

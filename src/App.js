@@ -11,7 +11,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Homepage/>}/>
-        <Route path='bookDetail/:id/:title/:price/:category' element={<DetailBook/>} />
+        <Route path='bookDetail/:id' element={<DetailBook/>} />
         <Route path='*' element={<ErrorPage/>}/>
       </Routes>
     </BrowserRouter>

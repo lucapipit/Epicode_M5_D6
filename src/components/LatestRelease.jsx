@@ -4,7 +4,7 @@ import { Row, Col } from 'react-bootstrap';
 import SingleBook from './SingleBook';
 import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCategory, searchFilter } from '../states/categoryState';
+import { getCategory, searchFilter, importBooksFromData } from '../states/categoryState';
 import { getCommentsFunc, starRateAverage } from "../states/commentState"
 import Comments from './Comments';
 import SendComment from './SendComment';
@@ -28,7 +28,8 @@ function LatestRelease({ theme }) {
     const filteredComm = useSelector((state) => state.bookComments.filteredComments);
     const isFirstOpen = useSelector((state) => state.bookComments.isFirstOpen);
     const rateBookAverage = useSelector((state) => state.bookComments.rateAverage);
-    const selectedBookName = useSelector((state) => state.bookComments.selectedBookName)
+    const selectedBookName = useSelector((state) => state.bookComments.selectedBookName);
+    const isLoading = useSelector((state) => state.bookComments.isLoading);
 
 
     useEffect(() => {
@@ -44,19 +45,19 @@ function LatestRelease({ theme }) {
                 dispatch(getCategory(SciFi));
                 break;
             case Romance:
-                dispatch(getCategory(Romance));
+                dispatch(getCategory(Romance));        
                 break;
             case Fantasy:
-                dispatch(getCategory(Fantasy));
+                dispatch(getCategory(Fantasy));        
                 break;
             case Horror:
-                dispatch(getCategory(Horror));
+                dispatch(getCategory(Horror));    
                 break;
             case History:
-                dispatch(getCategory(History));
+                dispatch(getCategory(History));        
                 break;
             default:
-                dispatch(getCategory(History));
+                dispatch(getCategory(History));       
 
         }
     }, [myBooks])
@@ -65,7 +66,7 @@ function LatestRelease({ theme }) {
     return (
         <Container fluid className='mt-2'>
             <Row className='mt-4 '>
-                <Col sm={8} >
+                <Col sm={8} >{/* books section */}
                     <Row className='d-flex justify-content-center'>
                         {myFilteredBooks && myFilteredBooks.map((el) => {
                             return <SingleBook
@@ -80,7 +81,7 @@ function LatestRelease({ theme }) {
                         })}
                     </Row>
                 </Col>
-                <Col className='px-4' sm={4} >
+                <Col className='px-4' sm={4} >{/* comments section aside */}
                     <div className='stickyComments' >
                         <h4 className='fw-light'>Comments of</h4>
                         <div className={`fw-light text-light bg-${isFirstOpen ? "primary" : "success"} p-2 rounded-2 my-2`}>{isFirstOpen ? "All Books" : selectedBookName}</div>
@@ -99,6 +100,9 @@ function LatestRelease({ theme }) {
                                 updatedAt={el.updatedAt}
                             />
                         })}
+                        {
+                            isLoading && <Spinner animation="border" variant="primary" />
+                        }
                     </Row>
                     <SendComment />
                 </Col>

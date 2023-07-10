@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     category: "",
     filteredSearchBooks: null,
-    singleBook: null
+    singleBook: "null"
 };
 
 
@@ -26,11 +26,12 @@ const categorySlice = createSlice({
         },
         selectSingleBook: (state, action) => {
             state.singleBook = state.category.filter((el)=>{
+                console.log("x");
                 return el.asin == action.payload
-            })
+            });
         }
     }
 })
 
-export const {getCategory, searchFilter, selectSingleBook} = categorySlice.actions;
+export const {getCategory, searchFilter, selectSingleBook, importBooksFromData} = categorySlice.actions;
 export default categorySlice.reducer

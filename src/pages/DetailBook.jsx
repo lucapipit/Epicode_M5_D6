@@ -1,23 +1,58 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import { Row, Col } from 'react-bootstrap';
+import Comments from '../components/Comments';
+import Spinner from 'react-bootstrap/Spinner';
+import { nanoid } from 'nanoid';
 
 function DetailBook() {
 
   const dispatch = useDispatch();
-  const myBook = useSelector((state)=>state.category.singleBook);
+  const myBook = useSelector((state) => state.category.singleBook);
+  const myComments = useSelector((state) => state.bookComments.comments);
+  const filteredComm = useSelector((state) => state.bookComments.filteredComments);
+  const isFirstOpen = useSelector((state) => state.bookComments.isFirstOpen);
+  const isLoading = useSelector((state) => state.bookComments.isLoading);
 
-  const { id, title, price, category} = useParams();
-  useEffect(()=>{
+
+  const { id } = useParams();
+  useEffect(() => {
     console.log(myBook);
   }, [myBook])
   return (
-    
-    <div className='d-flex justify-content-center'>
-      
-      <img src={myBook && myBook.img} alt="" />
-      <h4>{title}</h4>
-      <p>{price} <span>{category}</span> </p>
+    <div className='d-flex justify-content-center container'>
+      <Row className='d-flex justify-content-center container'>
+        <Card style={{ maxWidth: '40rem', border: "0px" }}>
+          <Card.Img src={myBook[0].img} />
+          <Card.Body>
+            <Card.Title>{myBook[0].title}</Card.Title>
+            <Card.Text>
+              <div>
+                {myBook[0].price}
+              </div>
+              <div>
+                {myBook[0].category}
+              </div>
+            </Card.Text>
+          </Card.Body>
+        </Card>
+        <hr />
+        <h3 className='text-secondary fw-light'>Comments:</h3>
+        {filteredComm && filteredComm.map((el) => {
+          return <Comments
+            key={nanoid()}
+            elementId={el.elementId}
+            _id={el._id}
+            author={el.author}
+            rate={el.rate}
+            comment={el.comment}
+            updatedAt={el.updatedAt}
+          />
+        })}
+      </Row>
     </div>
   )
 }

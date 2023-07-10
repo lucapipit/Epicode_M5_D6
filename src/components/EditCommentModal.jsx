@@ -47,7 +47,6 @@ function EditCommentModal() {
                         value={value}
                         onChange={(e) => { dispatch(setComment(e.target.value)); setValue(e.target.value) }}
                     />
-                    {/* <input value={{value}} onChange={(e) => { dispatch(setComment(e.target.value)); }} /> */}
                 </FloatingLabel>
                 <div className='mt-2 d-flex justify-content-between'>
                     <div>

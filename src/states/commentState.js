@@ -103,23 +103,21 @@ const commentsSlice = createSlice({
     name: "commentsApi",
     initialState,
     reducers: {
-        /* getComments: (state, action) => {
-            if (!state.isOnChanging) {
-                state.comments = action.payload
-            } else {
-                state.displayComment = action.payload
-            }
-        }, */
         filterComments: (state, action) => {//filter the comments in relation to the selected book
             state.isFirstOpen = false;
-            const myAsin = action.payload;
-            state.filteredComments = state.comments.filter((el) => {
-                if (el.elementId === myAsin) {
-                    console.log(el.elementId);
-                    return true
-                }
-                return false
-            });
+            
+            if(action.payload){
+                const myAsin = action.payload;
+                state.filteredComments = state.comments.filter((el) => {
+                    if (el.elementId === myAsin) {
+                        console.log(el.elementId);
+                        return true
+                    }
+                    return false
+                });
+            }else{
+                state.filteredComments = state.comments
+            }
         },
         starRateAverage: (state, action) => {//display the stars verage rating
 

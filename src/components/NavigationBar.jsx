@@ -6,9 +6,9 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import "../style/style.css";
-import { setTheme } from "../states/commentState";
+import { setTheme, filterComments } from "../states/commentState";
 import { searchFilter} from "../states/categoryState"
-import { UseSelector, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 //data Json
 import SciFi from "../data/scifi.json"
 import Horror from "../data/horror.json"
@@ -22,7 +22,7 @@ import { useDispatch } from 'react-redux';
 import { getCategory } from '../states/categoryState';
 
 
-function NavigationBar({theme, darkBtn}) {
+function NavigationBar({theme}) {
 
     const dispatch = useDispatch()
     const themeMode = useSelector((state) => state.bookComments.isLightMode);
@@ -38,12 +38,12 @@ function NavigationBar({theme, darkBtn}) {
                         style={{ maxHeight: '100px' }}
                         navbarScroll
                     >
-                        <NavDropdown className='' title="Category" id="navbarScrollingDropdown">
-                            <NavDropdown.Item href="#action3" onClick={()=>dispatch(getCategory(Fantasy))}>Fantasy</NavDropdown.Item>
-                            <NavDropdown.Item href="#action4" onClick={()=>dispatch(getCategory(Romance))}>Romance</NavDropdown.Item>
-                            <NavDropdown.Item href="#action5" onClick={()=>dispatch(getCategory(History))}>History</NavDropdown.Item>
-                            <NavDropdown.Item href="#action6" onClick={()=>dispatch(getCategory(SciFi))}>SciFi</NavDropdown.Item>
-                            <NavDropdown.Item href="#action7" onClick={()=>dispatch(getCategory(Horror))}>Horror</NavDropdown.Item>
+                        <NavDropdown className='myNavbarDropdown' title="Category" id="navbarScrollingDropdown">
+                            <NavDropdown.Item href="#action3" onClick={()=>{dispatch(getCategory(Fantasy)); dispatch(filterComments());}}>Fantasy</NavDropdown.Item>
+                            <NavDropdown.Item href="#action4" onClick={()=>{dispatch(getCategory(Romance)); dispatch(filterComments());}}>Romance</NavDropdown.Item>
+                            <NavDropdown.Item href="#action5" onClick={()=>{dispatch(getCategory(History)); dispatch(filterComments());}}>History</NavDropdown.Item>
+                            <NavDropdown.Item href="#action6" onClick={()=>{dispatch(getCategory(SciFi)); dispatch(filterComments());}}>SciFi</NavDropdown.Item>
+                            <NavDropdown.Item href="#action7" onClick={()=>{dispatch(getCategory(Horror)); dispatch(filterComments());}}>Horror</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                     <a className=' me-3 rounded-5 themeIcon' fill onClick={()=>{dispatch(setTheme())}}>{themeMode?<i class="bi bi-moon-fill"></i>:<i class="bi bi-brightness-high-fill"></i>}</a>
