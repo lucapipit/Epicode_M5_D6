@@ -1,14 +1,16 @@
 body{
     padding-top: 28px;
 }
+/* tema light */
 .lightTheme{
     background-color: #fff;
     color: #333 !important;
 }
 .lightTheme *{
-    background-color: #fff;
     color: #333 !important;
 }
+
+/* tema light */
 .darkTheme{
     background-color: #222;
     color: #f8f8f8 !important;
@@ -32,7 +34,9 @@ body{
 
 .myJumbotron{
     height: 300px !important; 
-    background-image: url("https://img.freepik.com/free-photo/book-that-has-word-mountain-it_188544-12612.jpg?w=1380&t=st=1688558124~exp=1688558724~hmac=df441f81ce4ba3b04eab08fbfe33b7f3aa29de0727d682d1c5d293267846e627")
+    background-image: url("https://cloudfront-us-east-1.images.arcpublishing.com/bostonglobe/H47HVU2CB5DPNBV6Z353AKPXQ4.jpeg");
+    background-size: cover;
+    background-position: center;
 }
 
 [class*=bi-star]{
