@@ -5,7 +5,7 @@ import SingleBook from './SingleBook';
 import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCategory, searchFilter, importBooksFromData } from '../states/categoryState';
-import { getCommentsFunc, starRateAverage } from "../states/commentState"
+import { getCommentsFunc, starRateAverage, setIsFirstOpen } from "../states/commentState"
 import Comments from './Comments';
 import SendComment from './SendComment';
 import Spinner from 'react-bootstrap/Spinner';
@@ -43,21 +43,27 @@ function LatestRelease({ theme }) {
         switch (myBooks) {
             case SciFi:
                 dispatch(getCategory(SciFi));
+                dispatch(setIsFirstOpen())
                 break;
             case Romance:
-                dispatch(getCategory(Romance));        
+                dispatch(getCategory(Romance));
+                dispatch(setIsFirstOpen())        
                 break;
             case Fantasy:
-                dispatch(getCategory(Fantasy));        
+                dispatch(getCategory(Fantasy));
+                dispatch(setIsFirstOpen())        
                 break;
             case Horror:
-                dispatch(getCategory(Horror));    
+                dispatch(getCategory(Horror));
+                dispatch(setIsFirstOpen())    
                 break;
             case History:
-                dispatch(getCategory(History));        
+                dispatch(getCategory(History));
+                dispatch(setIsFirstOpen())        
                 break;
             default:
-                dispatch(getCategory(History));       
+                dispatch(getCategory(History));
+                dispatch(setIsFirstOpen())       
 
         }
     }, [myBooks])

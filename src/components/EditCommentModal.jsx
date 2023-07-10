@@ -67,7 +67,12 @@ function EditCommentModal() {
                         }}>Delete <i class="bi bi-trash-fill text-light"></i></Button>
                     </div>
                     <div>
-                        <Button className='text-dark' variant="light" onClick={() => dispatch(isEditing(false))}>Cancel</Button>
+                        <Button className='text-dark' variant="light"
+                            onClick={() => {
+                                dispatch(isEditing(false));
+                                dispatch(getCommentsFunc());
+                                setTimeout(() => { dispatch(filterComments(myCurrentAsin)) }, 2000)
+                            }}>Cancel</Button>
                     </div>
                 </div>
             </div>

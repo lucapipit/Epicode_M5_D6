@@ -10,15 +10,15 @@ const initialState = {
     isLoading: false,//refers to an api call
     error: "",
     //for the POST
-    postRating: "",
-    postComment: "",
-    postElementId: "",
-    currentAsin: "",
+    postRating: "",//store the rating for the post
+    postComment: "",//store the comment for the post
+    postElementId: "",//store the id for the post
+    currentAsin: "",//set the current asin
     //for the PUT 
     isOnChanging: false,
-    displayComment: "",
-    displayRate: 0,
-    putCurrentId: "",
+    displayComment: "",//store the comment
+    displayRate: 0,//store the rate
+    putCurrentId: "",//store the id
 
 }
 
@@ -116,6 +116,7 @@ const commentsSlice = createSlice({
                     return false
                 });
             }else{
+                console.log(action.payload);
                 state.filteredComments = state.comments
             }
         },
@@ -143,32 +144,35 @@ const commentsSlice = createSlice({
             }
 
         },
+        setIsFirstOpen: (state, action) => {//it's used to display the edit button(light blue pencil) on comments card when a card is selected
+            state.isFirstOpen = true
+        },
         setTheme: (state, action) => {//set the light/dark mode
             state.isLightMode = !state.isLightMode
         },
         //for the POST
-        setRating: (state, action) => {
+        setRating: (state, action) => {//set the value of the rating for the post call
             state.postRating = action.payload;
         },
-        setComment: (state, action) => {
+        setComment: (state, action) => {//store the comment for the post call
             state.postComment = action.payload;
         },
-        setElementId: (state, action) => {
+        setElementId: (state, action) => {//store the elementId for the post call
             state.postElementId = action.payload;
         },
-        setCurrentAsin: (state, action) => {
+        setCurrentAsin: (state, action) => {//store the asin for the post call
             state.currentAsin = action.payload
         },
         //for the PUT
-        isEditing: (state, action) => {
+        isEditing: (state, action) => {//activate some functions when the edit modal is opened
             state.isOnChanging = action.payload;
         },
-        displayMyComment: (state, action) => {
+        displayMyComment: (state, action) => {//displays comment in the form input
             state.comments = (state.comments).filter((el) => {
                 return el._id === action.payload
             });
         },
-        setCurrentId: (state, action) => {
+        setCurrentId: (state, action) => {//set the id for the post call
             state.putCurrentId = action.payload;
         }
 
@@ -198,7 +202,7 @@ export const {
     getComments, filterComments, starRateAverage,
     setTheme, setRating, setComment, setElementId,
     setCurrentAsin, isEditing, displayMyComment,
-    setCurrentId
+    setCurrentId, setIsFirstOpen
 } = commentsSlice.actions;
 export default commentsSlice.reducer;
 export { getCommentsFunc, postCommentsFunc, putCommentsFunc, deleteCommentsFunc }

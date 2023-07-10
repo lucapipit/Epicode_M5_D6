@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch} from 'react-redux';
 import { setRating } from "../states/commentState"
-
+//this components allows to send the rate 
 function AddStarsRating({myRate}) {
     const dispatch = useDispatch();
     const [rate, setRate] = useState(myRate===0?0:myRate);

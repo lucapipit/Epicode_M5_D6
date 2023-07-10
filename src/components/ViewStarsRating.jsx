@@ -1,6 +1,6 @@
 import React from 'react';
 import "../style/style.css"
-
+//this components allows to visualize the rate 
 function ViewStarsRating({rate}) {
     return (
         <>

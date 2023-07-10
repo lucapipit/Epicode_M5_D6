@@ -24,17 +24,19 @@ function DetailBook() {
   }, [myBook])
   return (
     <div className='d-flex justify-content-center container'>
-      <Row className='d-flex justify-content-center container'>
-        <Card style={{ maxWidth: '40rem', border: "0px" }}>
+      <Row className='d-flex justify-content-center container mt-3 mb-5'>
+        <Card className='mb-5' style={{ maxWidth: '40rem', border: "0px" }}>
           <Card.Img src={myBook[0].img} />
           <Card.Body>
-            <Card.Title>{myBook[0].title}</Card.Title>
+            <Card.Title className='display-6'>{myBook[0].title}</Card.Title>
             <Card.Text>
-              <div>
-                {myBook[0].price}
+              <div className='display-2 text-success'>
+                {myBook[0].price} $
               </div>
-              <div>
-                {myBook[0].category}
+              <div className='mt-3'>
+                <span className='display-7 text-light bg-primary p-2 rounded-5'>
+                  {myBook[0].category}
+                </span>
               </div>
             </Card.Text>
           </Card.Body>
